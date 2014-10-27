@@ -5,8 +5,14 @@
     <link>http://bost.ocks.org/mike/</link>
     <atom:link href="http://bost.ocks.org/mike/index.rss" rel="self" type="application/rss+xml" />
     <description>Mike Bostock</description>
-    <pubDate>26 Jul 2014 12:00 GMT</pubDate>
-    <lastBuildDate>26 Jul 2014 12:00 GMT</lastBuildDate>
+    <pubDate>19 Sep 2014 12:00 GMT</pubDate>
+    <lastBuildDate>19 Sep 2014 12:00 GMT</lastBuildDate>
+    <item>
+      <title>‘Stop-and-Frisk’ Is All but Gone From New York</title>
+      <link>http://www.nytimes.com/interactive/2014/09/19/nyregion/stop-and-frisk-is-all-but-gone-from-new-york.html</link>
+      <description><![CDATA[<a href="http://www.nytimes.com/interactive/2014/09/19/nyregion/stop-and-frisk-is-all-but-gone-from-new-york.html"><img src="http://bost.ocks.org/mike/stop-frisk.png"></a>]]></description>
+      <pubDate>19 Sep 2014 12:00 GMT</pubDate>
+    </item>
     <item>
       <title>Mapping the Spread of Drought Across the U.S.</title>
       <link>http://www.nytimes.com/interactive/2014/upshot/mapping-the-spread-of-drought-across-the-us.html</link>

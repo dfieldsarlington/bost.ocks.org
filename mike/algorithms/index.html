@@ -2025,7 +2025,12 @@ function quicksort(array) {
           end = Math.min(i + (m << 1), n);
       merge(a0, a1, left, right, end);
     }
-    array = a0, a0 = a1, a1 = array;
+    i = a0, a0 = a1, a1 = i;
+  }
+  if (array === a1) {
+    for (var i = 0; i < n; ++i) {
+      array[i] = a0[i];
+    }
   }
 }
 

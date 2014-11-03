@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html class="ocks-org do-not-copy">
+<meta charset="utf-8">
+<title>How To Scroll</title>
+<style>
+
+@import url(../style.css?e54e999);
+
+</style>
+
+<header>
+  <aside>November 3, 2014</aside>
+  <a href="../" rel="author">Mike Bostock</a>
+</header>
+
+<h1>How To Scroll</h1>
+
+<p>Scroll-based interaction is incredibly popular for <a href="http://www.nytimes.com/newsgraphics/2013/12/30/year-in-interactive-storytelling/">interactive storytelling</a>. There are many compelling reasons for this, yet scrolling is surprisingly nuanced and easy to break. So here are some rules for employing scrolling effectively.
+
+<h2><a name="1" href="#1">1.</a>Prefer scrolling to clicking.</h2>
+
+<p>As a form of interaction, scrolling is ubiquitous; we do it constantly. You will “interact” with this static page by scrolling while reading. Scrolling’s ubiquity makes it almost effortless, as you need not consciously coordinate your hand and eye as you scan. In contrast, clicking on a tab or stepper is a comparatively complex action that requires <a href="https://en.wikipedia.org/wiki/Fitts's_law">greater deliberation</a>. Making content visible by scrolling is almost always better than hiding it behind a click.
+
+<aside style="margin-top:1em;text-indent:-8px;">* Two-dimensional scrolling is possible but rarely desired.</aside>
+
+<p>Scrolling is especially good for narratives because it is linear: you can only scroll in one dimension.* It provides a single track with no branching, starting at the top and progressing continuously to the bottom. The only choice the user must make is whether to go forward to new content or backward to content already seen. With a click-based interface, it’s easy to overload the reader with choice, and even pieces that encourage exploration often have a primary path favored by the author.
+
+<p>While scrolling is efficient, the eye can scan even faster <i>without</i> scrolling, so it is preferable to avoid hiding content in the first place. Custom scrolling gives you a lot of freedom, but remember that browser windows come in a range of aspect ratios and sometimes it’s useful to show more content simultaneously. Also beware full-screen designs that lack any scrolling affordance: the reader might not realize they can scroll. A visual indication of additional content, either as partially-visible content or an explicit prompt, avoids the reader being stranded on the cover.
+
+<h2><a name="2" href="#2">2.</a>Allow rapid, incremental, reversible scrolling.</h2>
+
+<p>As readers, we have strong expectations on how scrolling should behave. As designers, we may yet change scrolling behavior, but too much change risks confusing or frustrating readers — the phenomenon of <a href="http://jordankoschei.com/why-scrolljacking-is-a-problem/">scrolljacking</a>.
+
+<p>In typical usage, scrolling is a <i>continuous</i> gesture: it is only constrained by the height of the page. The reader can slide the viewport to any position between the top and bottom. In contrast, pages are not typically an endless column of homogeneous text but a composition of <i>discrete</i> sections, such as photos, graphics and videos. How should we optimize the display for heterogeneous content, given that scrolling is continuous? How should we isolate an individual graphic or video to present it dramatically, rather than awkwardly cropped and cluttered by the arbitrary viewport?
+
+<p>There are two schools of thought here. The first is to constrain scrolling to fixed positions at content boundaries. The second is to leave scrolling as-is and instead adapt the content to the viewport.
+
+<aside style="margin-top:5em;text-indent:-8px;">* On desktop. This can be done reliably on mobile thanks to touch events, although it’d still be nice to have a web standard for swiping.</aside>
+
+<p>The first approach fundamentally alters the experience of scrolling. Instead of continuously sliding the viewport, the reader now performs discrete swipe-down or swipe-up gestures. Yet without knowing whether the reader’s fingers are touching the input device, it is difficult to detect swipes;* we must instead interpret <a href="http://www.w3.org/TR/DOM-Level-3-Events/#events-wheelevents">wheel events</a> and guess (poorly)! Rolling your own swipe gesture detection leads to several common problems:
+
+<ul>
+  <li><p>It’s extraordinarily sensitive. Even the smallest wheel event — scrolling a single pixel — is interpreted as scrolling an entire window height, an effective magnification of three orders of magnitude!
+  <li><p>Swipe gestures that occur during the animation of a previous swipe are either dropped on the floor or queued until the animation finishes. This makes scrolling feel laggy or unresponsive and is exacerbated by sensitivity; there’s no way to interrupt an accidental scroll.
+  <li><p>You cannot control the speed of the swipe animations, frustrating readers that want to scroll faster (or slower), and disabling rapid visual scanning of the entire page. Even a quick peek ahead requires sitting through two animations.
+  <li><p>You lose the scroll bar, so you can no longer click and drag the scroll thumb for direct manipulation of the viewport or click the scroll bar to jump to an arbitrary point. And you lose a visual representation of the currently-visible region of the page. The custom replacement — tiny vertical dots — restores only a subset of this functionality.
+  <li><p>You lose standard keyboard controls (see <a href="#5">#5</a>).
+  <li><p>You lose rubber-banding at the top and bottom of the page, abandoning helpful visual feedback and further making the page feel unresponsive.
+</ul>
+
+<p>The second approach retains standard scrolling behavior but alters the display based on the current viewport through the use of <a href="http://www.w3.org/TR/css3-positioning/#fixed-positioning">position-fixed</a> elements. The page is divided vertically into “screens” with scroll-based thresholds to trigger transition between screens.
+
+<p>Transitions between screens may be time-based with an instantaneous trigger (such as a 250ms cross-fade when <code>pageYOffset</code> crosses 1200px), or positioned-based within a transitionary region (such as a cross-fade from zero opacity at 1100px to full opacity at 1200px). Position-based transitions automatically adjust speed to match how the reader scrolls; however, triggered time-based transitions avoid the possibility of sitting in a transition indefinitely, which can be unsettling. Importantly, even when time-based transitions are used, the reader can still interrupt the transition and has full control over the viewport.
+
+<aside style="margin-top:1em;text-indent:-8px;">* Swipe gestures may become viable when touch events are supported on desktop and swipes can be detected reliably.</aside>
+
+<p>As you may have guessed, I am a strong proponent of the second approach.* It preserves <a href="https://en.wikipedia.org/wiki/Direct_manipulation_interface">direct manipulation</a> whereas the first approach feels indirect and detached; I would rather scroll the page myself than hand-wave a butler to advance the page on my behalf. The first school seems to value the purity of the designer’s aesthetics over the user’s experience. Rapid, incremental, reversible scrolls are more usable than slow, animated swipes.
+
+<p>But don’t take my word for it; you decide! Two well-known examples of the first school are <a href="http://www.hugeinc.com/">Huge’s home page</a> and <a href="https://www.apple.com/mac-pro/">Apple’s Mac Pro page</a>. Two examples of the second school with position-based scroll transitions are <a href="http://www.nytimes.com/newsgraphics/2013/10/27/south-china-sea/">A Game of Shark and Minnow</a> and <a href="http://www.nytimes.com/interactive/2014/02/11/sports/sochi-2014-interactive-stories.html">Sochi 2014: Interactive Stories</a>. For an example of triggered time-based transitions, see my <a href="https://mbostock.github.io/stack/">Stack presentation library</a>.
+
+<h2><a name="3" href="#3">3.</a>Provide instantaneous, consistent feedback.</h2>
+
+<p>Scrolling should provide instantaneous visual feedback in response to user input; when you scroll using the mouse, touch, or keyboard, you should instantly see the display respond. This feedback is an essential component of direct manipulation and lets you rapidly adjust your input to scroll the desired distance and velocity.
+
+<p>When implementing custom scrolling, provide feedback by having at least some visible content scroll normally at all times. Don’t simply make everything position-fixed; if nothing moves when the reader scrolls, even temporarily, the page will again feel laggy or unresponsive. This is why <a href="http://www.nytimes.com/newsgraphics/2013/10/27/south-china-sea/">A Game of Shark & Minnow</a> has text scrolling on top of the video. If you find free-floating text too messy, use something smaller; any visible element that scrolls normally should suffice.
+
+<p>This advice applies not just to scroll-based transitions between screens, but any time you alter normal scrolling behavior. In <a href="http://www.nytimes.com/interactive/2014/09/14/sports/baseball/jeter-swings.html">342,000 Swings Later, Derek Jeter Calls It a Career</a>, a looped animation of Jeter’s swing zooms out as you scroll down, offering a sense of scale. The scrolling text in the foreground serves as an anchor of predictable behavior while the background animation zooms dramatically.
+
+<h2><a name="4" href="#4">4.</a>Avoid unwanted disruptions.</h2>
+
+<p>The viewport does not precisely correspond with the reader’s eye position; a typical viewport is many times larger than the area of <a href="https://en.wikipedia.org/wiki/Fovea_centralis">foveal vision</a>. Use caution playing animations or video as soon as the elements scroll into view, particularly with audio; even though the elements are visible, the reader may not yet have finished reading preceding text. Surprises are likely to distract the reader’s eye and interrupt reading, and repeated disruptions can frustrate readers.
+
+<p>To play video on scroll safely, isolate it making it fill the viewport; then you <i>can</i> assume the reader is ready for it, since it will be the only thing visible. Non-disruptive auto-play is simply a matter of cueing so that the reader knows what is about to happen, and can choose to scroll in or wait. It’s only the unexpected trigger that is disruptive. A fade-to-black can further reinforce the visual cue of an imminent video.
+
+<h2><a name="5" href="#5">5.</a>Support standard keyboard controls.</h2>
+
+<p>While we may primarily consider the mouse wheel or touch pad, scrolling supports secondary input modes as well: pressing an arrow key, clicking the scroll bar or dragging the scroll thumb. There are at least twelve standard keyboard shortcuts for scrolling:
+
+<ul>
+  <li><i>right arrow</i> - scroll right
+  <li><i>left arrow</i> - scroll left
+  <li><i>up arrow</i> - scroll up
+  <li><i>down arrow</i> - scroll down
+  <li><i>home</i> or <i>command-up arrow</i> - scroll to the top
+  <li><i>end</i> or <i>command-down arrow</i> - scroll to the bottom
+  <li><i>page down</i> or <i>space</i> - scroll down one screen
+  <li><i>page up</i> or <i>shift-space</i> - scroll up one screen
+</ul>
+
+<p>It’s reasonable to override some of these to tweak scrolling behavior, say to change up and down arrows to jump between discrete screens of content rather than individual lines of text. But don’t inadvertently break other shortcuts when you implement custom keyboard controls. And most importantly, don’t break browser history navigation (command-left, command-right, delete)!
+
+<footer>
+  <aside>November 3, 2014</aside>
+  <a href="../" rel="author">Mike Bostock</a>
+</footer>
+
+<script>
+
+GoogleAnalyticsObject = "ga", ga = function() { ga.q.push(arguments); }, ga.q = [], ga.l = +new Date;
+ga("create", "UA-48272912-3", "ocks.org");
+ga("send", "pageview");
+
+</script>
+<script async src="../highlight.min.js"></script>
+<script async src="//www.google-analytics.com/analytics.js"></script>

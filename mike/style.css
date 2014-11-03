@@ -55,9 +55,9 @@ h1, h2 {
 h2 a[name],
 h2 a[id] {
   color: #ccc;
-  left: -20px;
+  right: 100%;
+  padding: 0 .3em;
   position: absolute;
-  width: 740px;
 }
 
 header,

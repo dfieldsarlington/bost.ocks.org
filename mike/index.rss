@@ -5,8 +5,14 @@
     <link>http://bost.ocks.org/mike/</link>
     <atom:link href="http://bost.ocks.org/mike/index.rss" rel="self" type="application/rss+xml" />
     <description>Mike Bostock</description>
-    <pubDate>19 Sep 2014 12:00 GMT</pubDate>
-    <lastBuildDate>19 Sep 2014 12:00 GMT</lastBuildDate>
+    <pubDate>3 Nov 2014 9:00 GMT</pubDate>
+    <lastBuildDate>3 Nov 2014 9:00 GMT</lastBuildDate>
+    <item>
+      <title>How To Scroll</title>
+      <link>http://bost.ocks.org/mike/scroll/</link>
+      <description><![CDATA[<a href="http://bost.ocks.org/mike/scroll/"><img src="http://bost.ocks.org/mike/scroll.png"></a>]]></description>
+      <pubDate>3 Nov 2014 9:00 GMT</pubDate>
+    </item>
     <item>
       <title>‘Stop-and-Frisk’ Is All but Gone From New York</title>
       <link>http://www.nytimes.com/interactive/2014/09/19/nyregion/stop-and-frisk-is-all-but-gone-from-new-york.html</link>

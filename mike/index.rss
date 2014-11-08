@@ -5,8 +5,14 @@
     <link>http://bost.ocks.org/mike/</link>
     <atom:link href="http://bost.ocks.org/mike/index.rss" rel="self" type="application/rss+xml" />
     <description>Mike Bostock</description>
-    <pubDate>3 Nov 2014 9:00 GMT</pubDate>
-    <lastBuildDate>3 Nov 2014 9:00 GMT</lastBuildDate>
+    <pubDate>5 Nov 2014 9:00 GMT</pubDate>
+    <lastBuildDate>5 Nov 2014 9:00 GMT</lastBuildDate>
+    <item>
+      <title>The Most Detailed Maps You’ll See From the Midterm Elections</title>
+      <link>http://www.nytimes.com/interactive/2014/11/04/upshot/senate-maps.html</link>
+      <description><![CDATA[<a href="http://www.nytimes.com/interactive/2014/11/04/upshot/senate-maps.html"><img src="http://bost.ocks.org/mike/precinct-maps.png"></a>]]></description>
+      <pubDate>5 Nov 2014 9:00 GMT</pubDate>
+    </item>
     <item>
       <title>How To Scroll</title>
       <link>http://bost.ocks.org/mike/scroll/</link>
